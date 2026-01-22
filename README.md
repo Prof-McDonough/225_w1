@@ -7,13 +7,12 @@ Students should:
    -  01_elements/00_content.ipynb
    -  01_elements/03_content.ipynb
    -  01_elements/05_summary.ipynb
--  Complete the exercises and review notebooks in each chapter. Commit after completing each notebook.
+-  Complete the exercise notebooks in each chapter. Commit after completing each notebook.
    -   00_intro/01_excercises_markdown.ipynb
-   -   00_intro/01_review.ipynb
    -   01_elements/01_excercises_print.ipynb
    -   01_elements/02_excercises_for-loops.ipynb
    -   01_elements/04_exercises_calculator.ipynb
-   -   01_elements/06_review.ipynb
+-   Review the 'review' notebooks in each chapter to study for in-class quizzes
 -   Make a final commit (add FINAL to the commit comments) to indicate you have finished the assignment.
   
 
