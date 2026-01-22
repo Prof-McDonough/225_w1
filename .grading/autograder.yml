@@ -1,0 +1,61 @@
+name: Autograder
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout student repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for commit analysis
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install jupyter nbconvert nbformat ipykernel
+        # Add any additional dependencies your notebooks need
+        # pip install numpy pandas matplotlib scipy
+    
+    - name: Download grading tools
+      run: |
+        # Download test_functions.py and assignment_config.py from your grading repo
+        # For now, we'll assume they're in a .grading directory in the student repo
+        # (You'll add these to your assignment template)
+        if [ ! -f .grading/test_functions.py ]; then
+          echo "Error: Grading tools not found!"
+          exit 1
+        fi
+    
+    - name: Run autograder
+      id: autograder
+      run: |
+        python .grading/run_autograder.py
+      continue-on-error: true
+    
+    - name: Display results
+      run: |
+        cat autograder_results.txt
+    
+    - name: Post results as comment (optional)
+      if: github.event_name == 'push'
+      run: |
+        echo "Results posted to console. Check Actions log for details."
+        # You can add a GitHub comment action here if you want results as comments
+    
+    - name: Upload results
+      uses: actions/upload-artifact@v3
+      with:
+        name: autograder-results
+        path: autograder_results.txt
